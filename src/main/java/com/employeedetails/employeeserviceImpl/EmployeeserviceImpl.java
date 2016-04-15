@@ -10,13 +10,11 @@ import com.employeedetails.employeeServiceDAO.EmployeeServiceDAO;
 import com.employeedetails.employeeservice.EmployeeService;
 import com.employeedetails.user.Employee;
 
-
 @Component
 public class EmployeeserviceImpl implements EmployeeService {
 
 	@Autowired
 	private DataBaseHolderFactory dataBaseHolderFactory;
-	
 
 	@Override
 	public String addEmployeeDetails(Employee employee) {
@@ -38,12 +36,5 @@ public class EmployeeserviceImpl implements EmployeeService {
 		List<Employee> employees = employeeServiceDAO.listEmployeeDetails();
 		return employees;
 	}
-
-
-	
-	
-
-
-	
 
 }
