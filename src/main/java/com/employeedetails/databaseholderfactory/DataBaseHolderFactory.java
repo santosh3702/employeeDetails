@@ -1,5 +1,6 @@
 package com.employeedetails.databaseholderfactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,9 @@ public class DataBaseHolderFactory {
 	
 	@Value("${DB_ON}") 
 	private String dbName;
+	
+	@Autowired
+	private MYSQL_DB db;
 
 	public EmployeeServiceDAO getDataBaseDetails() {
 		
@@ -23,7 +27,7 @@ public class DataBaseHolderFactory {
 		return new CacheDAO();	
 		}
 		if(dbName.equals("MYSQL")){
-			return new MYSQL_DB();
+		return	db;
 		}
 		else {
 			return new OracleDAO();

@@ -8,28 +8,28 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
 
-import com.employeedetails.employeeServiceDAO.EmployeeServiceDAO;
-import com.employeedetails.employeeServiceDAOImpl.MYSQL_DB;
-
+@Component
 @Configuration
 @PropertySource("classpath:application.properties")
 public class DB_Config {
-	
-	@Value("${DB_ON}") 
+
+	@Value("${DB_ON}")
 	private String dbName;
-	
-	@Value("${DB_DRIVER}") 
+
+	@Value("${DB_DRIVER}")
 	private String driverclass;
-	
-	@Value("${URL}") 
+
+	@Value("${URL}")
 	private String url;
-	
-	@Value("${USERNAME}") 
+
+	@Value("${USERNAME1}")
 	private String userName;
-	
-	@Value("${PASSWORD}") 
+
+	@Value("${PASSWORD}")
 	private String password;
+
 	
 	@Bean
 	public DataSource getDataSource() {
@@ -47,19 +47,6 @@ public class DB_Config {
 		jdbcTemplate.setDataSource(getDataSource());
 		return jdbcTemplate;
 	}
-	
-	
-	public EmployeeServiceDAO employeeServiceDAO(){
-		if((!dbName.isEmpty()) && dbName == "MYSQL"){
-			MYSQL_DB mYSQL_DB = new MYSQL_DB();
-			mYSQL_DB.setJdbcTemplate(jdbcTemplate());
-			return mYSQL_DB;
-		}
-		
-		
-		else{
-		return null;
-		}
-	}
+
 	
 }

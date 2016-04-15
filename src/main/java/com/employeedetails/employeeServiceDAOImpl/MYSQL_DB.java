@@ -1,26 +1,30 @@
 package com.employeedetails.employeeServiceDAOImpl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import com.employeedetails.employeeServiceDAO.EmployeeServiceDAO;
+import com.employeedetails.exception.EmployeeDetailException;
+import com.employeedetails.exception.ErrorCode;
 import com.employeedetails.user.Employee;
 
-@Repository
+@Component/*(value ="mysql_DB")*/
 public class MYSQL_DB implements EmployeeServiceDAO {
-
+	
+    @Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
+	
+	public MYSQL_DB(){
+		
 	}
+	/*public void setDataSource(DataSource ds) {
+	    jdbcTemplate = new JdbcTemplate(ds);
+	}*/
 
 	@Override
 	public String addEmployeeDetails(Employee employee) {
@@ -34,18 +38,32 @@ public class MYSQL_DB implements EmployeeServiceDAO {
 	private String addemployee(Employee employee) {
 		// TODO Auto-generated method stub
 		if (findByemployeeId(employee.getEmployeeId())) {
-
+			String query = "insert into employee (firstname , lastname, mobileno, employeeid, designation) values (?,?,?,?,?)";
+			jdbcTemplate.update(query, new Object[] { employee.getFirstName(), employee.getLastName(),
+					employee.getMobileNo(), employee.getEmployeeId(), employee.getDesignation() });
+			return "employee is added";
 		}
 
-		return null;
+		else {
+
+			try {
+				throw new EmployeeDetailException("402", ErrorCode.EC_1027.getValue());
+			} catch (EmployeeDetailException e) {
+				// TODO Auto-generated catch block
+				return "employee is alredy exits";
+			}
+		}
 	}
 
 	private boolean findByemployeeId(String employeeId) {
 		String query = "Select * from employee where employeeid = ?";
-		
-		
-		jdbcTemplate.query(query, new EmployeeIdExtractor() );
-		
+		List<String> args = new ArrayList<>();
+		args.add(employeeId);
+		Employee employee = (Employee) jdbcTemplate.query(query, args.toArray() ,new EmployeeIdExtractor());
+		if (employee.getEmployeeId() == null) {
+			return true;
+		}
+
 		return false;
 	}
 

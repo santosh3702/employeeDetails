@@ -39,7 +39,8 @@ dependencies {
        compile 'org.apache.commons:commons-lang3:3.0'
        compile 'org.springframework:spring-jdbc:4.2.5.RELEASE'
        
-//     compile("org.springframework:spring-web:3.0.4.RELEASE")      
+     compile'mysql:mysql-connector-java:5.1.6'
+     
        testCompile("org.springframework.boot:spring-boot-starter-test")
        
 }
