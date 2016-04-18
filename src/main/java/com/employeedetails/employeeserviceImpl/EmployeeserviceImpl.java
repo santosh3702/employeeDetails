@@ -37,4 +37,11 @@ public class EmployeeserviceImpl implements EmployeeService {
 		return employees;
 	}
 
+	@Override
+	public String deleteEmployee(String employeeId) {
+		EmployeeServiceDAO employeeServiceDAO = dataBaseHolderFactory.getDataBaseDetails();
+		String status = employeeServiceDAO.deleteEmployee(employeeId);
+		return status;
+	}
+
 }

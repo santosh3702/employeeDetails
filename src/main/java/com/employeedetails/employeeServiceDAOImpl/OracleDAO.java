@@ -25,5 +25,11 @@ public class OracleDAO implements EmployeeServiceDAO {
 		return null;
 	}
 
+	@Override
+	public String deleteEmployee(String employee) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

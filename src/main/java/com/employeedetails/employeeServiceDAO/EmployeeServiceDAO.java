@@ -12,6 +12,7 @@ public interface EmployeeServiceDAO {
 
 	public List<Employee> listEmployeeDetails();
 	
+	public String  deleteEmployee(String employeeId);
 	
 
 }

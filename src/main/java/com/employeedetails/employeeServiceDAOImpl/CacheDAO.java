@@ -61,6 +61,13 @@ public class CacheDAO implements EmployeeServiceDAO    {
 		return employeeslist;
 	}
 
+
+	@Override
+	public String deleteEmployee(String employee) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

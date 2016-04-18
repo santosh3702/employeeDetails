@@ -28,8 +28,6 @@ public class MYSQL_DB implements EmployeeServiceDAO {
 
 	@Override
 	public String addEmployeeDetails(Employee employee) {
-		// insert into employee (firstname , lastname, mobileno, employeeid,
-		// designation) values (?,?,?,?,?)
 		String employe = null;
 		employe = addemployee(employee);
 		return employe;
@@ -59,8 +57,23 @@ public class MYSQL_DB implements EmployeeServiceDAO {
 		String query = "Select * from employee where employeeid = ?";
 		List<String> args = new ArrayList<>();
 		args.add(employeeId);
+	/*	String sql = "tee D:\\rahul"+"\\mysql.txt";
+		System.out.println(sql);
+		jdbcTemplate.update(sql);*/
 		Employee employee = (Employee) jdbcTemplate.query(query, args.toArray() ,new EmployeeIdExtractor());
 		if (employee.getEmployeeId() == null) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	private boolean findByemployeeIdExist(String employeeId) {
+		String query = "Select * from employee where employeeid = ?";
+		List<String> args = new ArrayList<>();
+		args.add(employeeId);
+		Employee employee = (Employee) jdbcTemplate.query(query, args.toArray() ,new EmployeeIdExtractor());
+		if (employee.getEmployeeId() != null) {
 			return true;
 		}
 
@@ -69,14 +82,38 @@ public class MYSQL_DB implements EmployeeServiceDAO {
 
 	@Override
 	public String updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+		String update = null;
+		if(findByemployeeIdExist(employee.getEmployeeId())){
+		 update = upDate(employee);
+		}
+		else{
+			update = "employeeId not exist";
+		}
+		return update;
+	}
+
+	private String upDate(Employee employee) {
+		String query = "update employee set firstname = ?, lastname = ?, mobileno = ?, designation = ? where employeeid = ?";
+		jdbcTemplate.update(query, new Object[] { employee.getFirstName(), employee.getLastName(),
+				employee.getMobileNo(), employee.getDesignation(), employee.getEmployeeId()});
+		return "employee is updated";
 	}
 
 	@Override
 	public List<Employee> listEmployeeDetails() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> listMarketCouch = new ArrayList<Employee>();
+		String query = "Select * from employee";
+		listMarketCouch = jdbcTemplate.query(query, new EmployeeListExtractor());
+		return listMarketCouch;
+	}
+
+	@Override
+	public String deleteEmployee(String employeeId) {
+		String query = "delete from employee where employeeid = ?";
+		List<String> args = new ArrayList<>();
+		args.add(employeeId);
+		jdbcTemplate.update(query,  args.toArray());
+		return "employee is deleted";
 	}
 
 }

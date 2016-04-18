@@ -35,13 +35,6 @@ public class EmployeeController {
 		return new ResponseEntity<EmployeeDetailException>(e,HttpStatus.CREATED);
 	}
 	
-/*
-	@ExceptionHandler(EmployeeValidateException.class)
-	@ResponseBody
-	public ResponseEntity<EmployeeValidateException> myexception(@RequestBody EmployeeValidateException e){
-		return new ResponseEntity<EmployeeValidateException>(e, HttpStatus.CREATED);	
-	}
-	*/
 	
 	@RequestMapping("/")
 	public String welcomeEmployeeSystem() {
@@ -58,7 +51,8 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "/update" , method = RequestMethod.POST, produces={"application/json","application/xml"},consumes={"application/json","application/xml"} )
-	public ResponseEntity<String> updateEmployeeDetails(@RequestBody Employee userrequest){
+	public ResponseEntity<String> updateEmployeeDetails(@RequestBody Employee userrequest) throws EmployeeValidateException{
+		employeeValidation.validateEmployeeDetails(userrequest);
 		String employeeUpdated = employeeService.updateEmployeeDetails(userrequest);
 		return new ResponseEntity<String>(employeeUpdated, HttpStatus.CREATED);
 	}
@@ -66,6 +60,15 @@ public class EmployeeController {
 	@RequestMapping(value ="/list" , method = RequestMethod.GET)
 	public List<Employee> listEmployeeDetails(){ 	
 		List<Employee> employees = employeeService.listEmployeeDetails();
+		return employees;
+		
+	}
+	
+	
+	@RequestMapping(value ="/delete" , method = RequestMethod.DELETE)
+	public String deleteEmployeeById(@RequestBody Employee userrequest){ 	
+		
+		String employees = employeeService.deleteEmployee(userrequest.getEmployeeId());
 		return employees;
 		
 	}

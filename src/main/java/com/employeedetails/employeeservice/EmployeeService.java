@@ -11,4 +11,6 @@ public interface EmployeeService {
 	public String updateEmployeeDetails(Employee employee);
 	
 	public List<Employee> listEmployeeDetails();
+
+	public String deleteEmployee(String employeeId);
 }
