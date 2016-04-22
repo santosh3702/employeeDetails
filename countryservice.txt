@@ -1,0 +1,180 @@
+mysql> create table country ( id MEDIUMINT  NOT NULL AUTO_INCREMENT, countryName varchar(200));
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> create table country ( id MEDIUMINT  NOT NULL AUTO_INCREMENT, countryName varchar(200), PRIMARY KEY (id) );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into country (countryName) values ('india');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from country;
++----+-------------+
+| id | countryName |
++----+-------------+
+|  1 | india       | 
++----+-------------+
+1 row in set (0.00 sec)
+
+mysql> update country set countryName = 'califonia' where countryNmae = 'india';
+ERROR 1054 (42S22): Unknown column 'countryNmae' in 'where clause'
+mysql> update country set countryName = 'califonia' where countryName= 'india';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from country;
++----+-------------+
+| id | countryName |
++----+-------------+
+|  1 | califonia   | 
++----+-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from country where id = 1;
++----+-------------+
+| id | countryName |
++----+-------------+
+|  1 | califonia   | 
++----+-------------+
+1 row in set (0.00 sec)
+
+mysql> notee
+mysql> select * from COUNTRY_STATES;
+Empty set (0.00 sec)
+
+mysql> insert into COUNTRY_STATES (COUNTRY_ID,STATE_NAME) values (1,'Los Angeles');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from COUNTRY_STATES;
++------------+----------+-------------+
+| COUNTRY_ID | STATE_ID | STATE_NAME  |
++------------+----------+-------------+
+|          1 |        1 | Los Angeles | 
++------------+----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> insert into COUNTRY_STATES (COUNTRY_ID,STATE_NAME) values (1,'San Francisco');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from COUNTRY_STATES;
++------------+----------+---------------+
+| COUNTRY_ID | STATE_ID | STATE_NAME    |
++------------+----------+---------------+
+|          1 |        1 | Los Angeles   | 
+|          1 |        2 | San Francisco | 
++------------+----------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into country (countryName) values ('India');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from country;
++----+-------------+
+| id | countryName |
++----+-------------+
+|  1 | califonia   | 
+|  2 | India       | 
++----+-------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into COUNTRY_STATES (COUNTRY_ID,STATE_NAME) values (2,'A.P');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into COUNTRY_STATES (COUNTRY_ID,STATE_NAME) values (2,'Telengana');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into COUNTRY_STATES (COUNTRY_ID,STATE_NAME) values (2,'UP');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from COUNTRY_STATES;
++------------+----------+---------------+
+| COUNTRY_ID | STATE_ID | STATE_NAME    |
++------------+----------+---------------+
+|          1 |        1 | Los Angeles   | 
+|          1 |        2 | San Francisco | 
+|          2 |        3 | A.P           | 
+|          2 |        4 | Telengana     | 
+|          2 |        5 | UP            | 
++------------+----------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+mysql> SELECT B.COUNTRY_ID,B.COUNTRY_NAME ,A.STATE_NAME FROM COUNTRY_STATES A,COUNTRY B 
+    -> WHERE A.COUNTRY_ID=B.COUNTRY_ID 
+    -> SELECT B.COUNTRY_ID,B.COUNTRY_NAME ,A.STATE_NAME FROM COUNTRY_STATES A,COUNTRY B 
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT B.COUNTRY_ID,B.COUNTRY_NAME ,A.STATE_NAME FROM COUNTRY_STATES A,COUNTRY B' at line 3
+mysql> ;
+ERROR: 
+No query specified
+
+mysql> SELECT B.id,B.countryName ,A.STATE_NAME FROM COUNTRY_STATES A , country Bwhere A.COUNTRY_ID = B.id where B.countryName = 'India';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'A.COUNTRY_ID = B.id where B.countryName = 'India'' at line 1
+mysql> SELECT B.id,B.countryName ,A.STATE_NAME FROM COUNTRY_STATES A , country Bwhere A.COUNTRY_ID = B.id where B.countryName = 'India';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'A.COUNTRY_ID = B.id where B.countryName = 'India'' at line 1
+mysql> SELECT B.id,B.countryName ,A.STATE_NAME FROM COUNTRY_STATES A , country Bwhere A.COUNTRY_ID = 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'A.COUNTRY_ID = 1' at line 1
+mysql> show tables;
++------------------+
+| Tables_in_xav_db |
++------------------+
+| country          | 
+| country_states   | 
+| employee         | 
++------------------+
+3 rows in set (0.00 sec)
+
+mysql> use sabha;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_sabha |
++-----------------+
+| country         | 
+| state           | 
+| topics          | 
+| user_detail     | 
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc country;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| country_id   | int(11)     | NO   | PRI | NULL    | auto_increment | 
+| country_name | varchar(45) | NO   | UNI |         |                | 
++--------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.03 sec)
+
+mysql> desc state;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| state_id   | int(11)     | NO   | PRI | NULL    | auto_increment | 
+| state_name | varchar(45) | NO   | UNI |         |                | 
+| country_id | int(11)     | NO   | UNI |         |                | 
++------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.03 sec)
+
+mysql> select * from country;
+Empty set (0.25 sec)
+
+
+
+country --country_id,country_name 
+
+country_states 
+country_id,state_id,state_name 
+
+
+create table country(country_id number, country_name varchar2(300)) 
+
+insert into country values(2,'PAKISTAN') 
+
+SELECT * FROM COUNTRY 
+
+CREATE TABLE COUNTRY_STATES(COUNTRY_ID NUMBER,STATE_ID NUMBER,STATE_NAME VARCHAR2(30)) 
+
+INSERT INTO COUNTRY_STATES VALUES(2,2,'YY') 
+
+SELECT B.COUNTRY_ID,B.COUNTRY_NAME ,A.STATE_NAME FROM COUNTRY_STATES A,COUNTRY B 
+WHERE A.COUNTRY_ID=B.COUNTRY_ID 
+AND B.COUNTRY_NAME='INDIA' 
